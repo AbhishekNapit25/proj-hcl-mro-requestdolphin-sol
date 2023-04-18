@@ -1,0 +1,21 @@
+{
+  "requires": {
+    "[hybrid]": {
+      "db": {
+        "binding": {
+          "type": "cf",
+          "apiEndpoint": "https://api.cf.us10-001.hana.ondemand.com",
+          "org": "f77c6c17trial",
+          "space": "dev",
+          "instance": "com-hcl-mro-requestdolphin-db",
+          "key": "com-hcl-mro-requestdolphin-db-key",
+          "resolved": false
+        },
+        "kind": "hana",
+        "vcap": {
+          "name": "db"
+        }
+      }
+    }
+  }
+}

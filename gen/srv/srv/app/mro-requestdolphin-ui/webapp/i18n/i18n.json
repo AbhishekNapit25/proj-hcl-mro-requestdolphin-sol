@@ -1,0 +1,30 @@
+{
+  "": {
+    "appTitle": "Manage Request for Maintenance",
+    "appDescription": "A Fiori application.",
+    "requestNo": "Maintenance Request",
+    "requestDesc": "Request Description",
+    "businessPartner": "Business Partner",
+    "contract": "Contract",
+    "businessPartnerName": "Business Partner Name",
+    "createdBy": "Created By",
+    "modifiedBy": "Modified By",
+    "createdAt": "Created Date & Time",
+    "modifiedAt": "Last Modified Date & Time",
+    "expectedArrivalDate": "Expected Arrival Date",
+    "expectedDeliveryDate": "Expected Delivery Date",
+    "to_requestType": "Request Type",
+    "to_requestType_rType": "Request Type",
+    "to_requestStatus_rStatus": "Request Status",
+    "to_requestStatus_rStatusDesc": "Request Status",
+    "ccpersonName": "Contact Person Name",
+    "ccemail": "Contact Person E-Mail",
+    "ccphoneNumber": "Telephone Number",
+    "ID": "Document ID",
+    "url": "URL",
+    "documentName": "Document Name",
+    "eMailReceivedDateAndTime": "Email Received Date and Time",
+    "remarks": "Remarks",
+    "changeStatus": "Change Status"
+  }
+}

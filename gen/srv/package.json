@@ -1,0 +1,104 @@
+{
+  "name": "proj-hcl-mro-requestdolphin-sol",
+  "version": "1.0.0",
+  "description": "A simple CAP project.",
+  "repository": "<Add your repository here>",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@sap-cloud-sdk/core": "^1.54.2",
+    "@sap-cloud-sdk/http-client": "^2.15.0",
+    "@sap/approuter": "^14.1.1",
+    "@sap/cds": "^6",
+    "@sap/cds-odata-v2-adapter-proxy": "^1.9.15",
+    "@sap/cds-runtime": "^3.3.0",
+    "@sap/xssec": "^3.0.0",
+    "express": "^4",
+    "hdb": "^0.19.5",
+    "i": "^0.3.7",
+    "request": "^2.88.2"
+  },
+  "devDependencies": {
+    "@sap/hdi-deploy": "^4.5.1",
+    "@sap/ux-specification": "^1.108.2",
+    "sqlite": "^4.1.2",
+    "sqlite3": "^5.1.6"
+  },
+  "scripts": {
+    "start": "cds run",
+    "watch-mro-requestdolphin-ui": "cds watch --open mro-requestdolphin-ui/webapp/index.html?sap-ui-xx-viewCache=false",
+    "watch-notifleo-ui": "cds watch --open notifleo-ui/webapp/index.html?sap-ui-xx-viewCache=false"
+  },
+  "engines": {
+    "node": "^16.15"
+  },
+  "eslintConfig": {
+    "extends": "eslint:recommended",
+    "env": {
+      "es2020": true,
+      "node": true,
+      "jest": true,
+      "mocha": true
+    },
+    "globals": {
+      "SELECT": true,
+      "INSERT": true,
+      "UPDATE": true,
+      "DELETE": true,
+      "CREATE": true,
+      "DROP": true,
+      "CDL": true,
+      "CQL": true,
+      "CXL": true,
+      "cds": true
+    },
+    "rules": {
+      "no-console": "off",
+      "require-atomic-updates": "off"
+    }
+  },
+  "cds": {
+    "i18n": {
+      "folders": [
+        "app/mro-requestdolphin-ui/webapp/i18n"
+      ]
+    },
+    "requires": {
+      "auth": {
+        "kind": "dummy"
+      },
+      "db": {
+        "kind": "sqlite",
+        "[production]": {
+          "kind": "hana"
+        },
+        "credentials": {
+          "database": "db/mr.db"
+        }
+      },
+      "MAINTREQ_SB": {
+        "kind": "odata-v2",
+        "model": "srv/external/MAINTREQ_SB",
+        "credentials": {
+          "url": "http://52.179.137.65:8002/sap/opu/odata/ISAMMRCO/MAINTREQ_SB/",
+          "username": "ANAMBARU",
+          "password": "Welcome123456"
+        }
+      },
+      "NumberRangeService": {
+        "kind": "odata",
+        "model": "srv/external/NumberRangeService",
+        "credentials": {
+          "url" : "http://localhost:42311/number-range/"
+        }
+      }
+    },
+    "hana": {
+      "deploy-format": "hdbtable"
+    }
+  },
+  "sapux": [
+    "app/mro-requestdolphin-ui",
+    "app/notifleo-ui"
+  ]
+}

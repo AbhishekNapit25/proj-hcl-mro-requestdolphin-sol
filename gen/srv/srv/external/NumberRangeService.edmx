@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Capabilities.V1.xml">
+    <edmx:Include Alias="Capabilities" Namespace="Org.OData.Capabilities.V1"/>
+  </edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+    <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+  </edmx:Reference>
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+    <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+  </edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/HTML5.xml">
+    <edmx:Include Alias="HTML5" Namespace="com.sap.vocabularies.HTML5.v1"/>
+  </edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
+    <edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
+  </edmx:Reference>
+  <edmx:DataServices>
+    <Schema Namespace="NumberRangeService" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      <EntityContainer Name="EntityContainer">
+        <EntitySet Name="NumberRanges" EntityType="NumberRangeService.NumberRanges">
+          <NavigationPropertyBinding Path="SiblingEntity" Target="NumberRanges"/>
+        </EntitySet>
+        <FunctionImport Name="getLastRunningNumber" Function="NumberRangeService.getLastRunningNumber"/>
+      </EntityContainer>
+      <EntityType Name="NumberRanges">
+        <Key>
+          <PropertyRef Name="ID"/>
+          <PropertyRef Name="IsActiveEntity"/>
+        </Key>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="numberRangeID" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="prefix" Type="Edm.String"/>
+        <Property Name="runningNumber" Type="Edm.Int32"/>
+        <Property Name="postfix" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="numberStart" Type="Edm.Int32"/>
+        <Property Name="numberEnd" Type="Edm.Int32"/>
+        <Property Name="autoRepeat" Type="Edm.Boolean"/>
+        <Property Name="concatinatedLastRunningNo" Type="Edm.String"/>
+        <Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="true"/>
+        <Property Name="HasActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+        <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+        <NavigationProperty Name="DraftAdministrativeData" Type="NumberRangeService.DraftAdministrativeData" ContainsTarget="true"/>
+        <NavigationProperty Name="SiblingEntity" Type="NumberRangeService.NumberRanges"/>
+      </EntityType>
+      <EntityType Name="DraftAdministrativeData">
+        <Key>
+          <PropertyRef Name="DraftUUID"/>
+        </Key>
+        <Property Name="DraftUUID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="CreationDateTime" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="CreatedByUser" Type="Edm.String" MaxLength="256"/>
+        <Property Name="DraftIsCreatedByMe" Type="Edm.Boolean"/>
+        <Property Name="LastChangeDateTime" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="LastChangedByUser" Type="Edm.String" MaxLength="256"/>
+        <Property Name="InProcessByUser" Type="Edm.String" MaxLength="256"/>
+        <Property Name="DraftIsProcessedByMe" Type="Edm.Boolean"/>
+      </EntityType>
+      <Action Name="draftPrepare" IsBound="true" EntitySetPath="in">
+        <Parameter Name="in" Type="NumberRangeService.NumberRanges"/>
+        <Parameter Name="SideEffectsQualifier" Type="Edm.String"/>
+        <ReturnType Type="NumberRangeService.NumberRanges"/>
+      </Action>
+      <Action Name="draftActivate" IsBound="true" EntitySetPath="in">
+        <Parameter Name="in" Type="NumberRangeService.NumberRanges"/>
+        <ReturnType Type="NumberRangeService.NumberRanges"/>
+      </Action>
+      <Action Name="draftEdit" IsBound="true" EntitySetPath="in">
+        <Parameter Name="in" Type="NumberRangeService.NumberRanges"/>
+        <Parameter Name="PreserveChanges" Type="Edm.Boolean"/>
+        <ReturnType Type="NumberRangeService.NumberRanges"/>
+      </Action>
+      <Function Name="getLastRunningNumber" IsBound="false" IsComposable="false">
+        <Parameter Name="numberRangeID" Type="Edm.String"/>
+        <ReturnType Type="Edm.String"/>
+      </Function>
+      <Annotations Target="NumberRangeService.NumberRanges">
+        <Annotation Term="UI.LineItem">
+          <Collection>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="numberRangeID"/>
+              <Annotation Term="HTML5.CssDefaults">
+                <Record Type="HTML5.CssDefaultsType">
+                  <PropertyValue Property="width" String="10rem"/>
+                </Record>
+              </Annotation>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="description"/>
+              <Annotation Term="HTML5.CssDefaults">
+                <Record Type="HTML5.CssDefaultsType">
+                  <PropertyValue Property="width" String="10rem"/>
+                </Record>
+              </Annotation>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="prefix"/>
+              <Annotation Term="HTML5.CssDefaults">
+                <Record Type="HTML5.CssDefaultsType">
+                  <PropertyValue Property="width" String="10rem"/>
+                </Record>
+              </Annotation>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="postfix"/>
+              <Annotation Term="HTML5.CssDefaults">
+                <Record Type="HTML5.CssDefaultsType">
+                  <PropertyValue Property="width" String="10rem"/>
+                </Record>
+              </Annotation>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="numberStart"/>
+              <Annotation Term="HTML5.CssDefaults">
+                <Record Type="HTML5.CssDefaultsType">
+                  <PropertyValue Property="width" String="10rem"/>
+                </Record>
+              </Annotation>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="numberEnd"/>
+              <Annotation Term="HTML5.CssDefaults">
+                <Record Type="HTML5.CssDefaultsType">
+                  <PropertyValue Property="width" String="10rem"/>
+                </Record>
+              </Annotation>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="autoRepeat"/>
+              <Annotation Term="HTML5.CssDefaults">
+                <Record Type="HTML5.CssDefaultsType">
+                  <PropertyValue Property="width" String="10rem"/>
+                </Record>
+              </Annotation>
+              <Annotation Term="UI.Hidden" Bool="true"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="concatinatedLastRunningNo"/>
+              <Annotation Term="HTML5.CssDefaults">
+                <Record Type="HTML5.CssDefaultsType">
+                  <PropertyValue Property="width" String="10rem"/>
+                </Record>
+              </Annotation>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="status"/>
+              <Annotation Term="UI.Hidden" Bool="true"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="runningNumber"/>
+              <Annotation Term="UI.Hidden" Bool="true"/>
+            </Record>
+          </Collection>
+        </Annotation>
+        <Annotation Term="UI.HeaderInfo">
+          <Record Type="UI.HeaderInfoType">
+            <PropertyValue Property="TypeName" String="Number Range"/>
+            <PropertyValue Property="TypeNamePlural" String="Number Ranges"/>
+            <PropertyValue Property="TypeImageUrl" String="sap-icon://information"/>
+            <PropertyValue Property="Title">
+              <Record Type="UI.DataField">
+                <PropertyValue Property="Value" Path="numberRangeID"/>
+              </Record>
+            </PropertyValue>
+            <PropertyValue Property="Description">
+              <Record Type="UI.DataField">
+                <PropertyValue Property="Value" Path="description"/>
+              </Record>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="UI.HeaderFacets">
+          <Collection>
+            <Record Type="UI.ReferenceFacet">
+              <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#HeaderGeneralInformation"/>
+            </Record>
+          </Collection>
+        </Annotation>
+        <Annotation Term="UI.FieldGroup" Qualifier="HeaderGeneralInformation">
+          <Record Type="UI.FieldGroupType">
+            <PropertyValue Property="Data">
+              <Collection>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="modifiedBy"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="modifiedAt"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="concatinatedLastRunningNo"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="UI.Facets">
+          <Collection>
+            <Record Type="UI.CollectionFacet">
+              <PropertyValue Property="ID" String="NumberRangeFacet"/>
+              <PropertyValue Property="Facets">
+                <Collection>
+                  <Record Type="UI.ReferenceFacet">
+                    <PropertyValue Property="ID" String="NumberRangeFacet"/>
+                    <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#NumberRangeFacet"/>
+                    <PropertyValue Property="Label" String="General"/>
+                  </Record>
+                </Collection>
+              </PropertyValue>
+            </Record>
+          </Collection>
+        </Annotation>
+        <Annotation Term="UI.FieldGroup" Qualifier="NumberRangeFacet">
+          <Record Type="UI.FieldGroupType">
+            <PropertyValue Property="Data">
+              <Collection>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="numberRangeID"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="description"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="autoRepeat"/>
+                  <Annotation Term="UI.Hidden" Bool="true"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="numberStart"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="numberEnd"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="prefix"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="postfix"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="NumberRangeService.EntityContainer/NumberRanges">
+        <Annotation Term="Capabilities.FilterRestrictions">
+          <Record Type="Capabilities.FilterRestrictionsType">
+            <PropertyValue Property="NonFilterableProperties">
+              <Collection>
+                <PropertyPath>status</PropertyPath>
+                <PropertyPath>runningNumber</PropertyPath>
+                <PropertyPath>autoRepeat</PropertyPath>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="Common.DraftRoot">
+          <Record Type="Common.DraftRootType">
+            <PropertyValue Property="ActivationAction" String="NumberRangeService.draftActivate"/>
+            <PropertyValue Property="EditAction" String="NumberRangeService.draftEdit"/>
+            <PropertyValue Property="PreparationAction" String="NumberRangeService.draftPrepare"/>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="NumberRangeService.NumberRanges/createdAt">
+        <Annotation Term="Common.Label" String="Created Date &amp; Time"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+      </Annotations>
+      <Annotations Target="NumberRangeService.NumberRanges/createdBy">
+        <Annotation Term="Common.Label" String="Created By"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="UserID.Description"/>
+      </Annotations>
+      <Annotations Target="NumberRangeService.NumberRanges/modifiedAt">
+        <Annotation Term="Common.Label" String="Last Modified Date &amp; Time"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+      </Annotations>
+      <Annotations Target="NumberRangeService.NumberRanges/modifiedBy">
+        <Annotation Term="Common.Label" String="Last Modified By"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="UserID.Description"/>
+      </Annotations>
+      <Annotations Target="NumberRangeService.NumberRanges/ID">
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="ID"/>
+      </Annotations>
+      <Annotations Target="NumberRangeService.NumberRanges/numberRangeID">
+        <Annotation Term="Common.Label" String="Number Range ID"/>
+        <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+      </Annotations>
+      <Annotations Target="NumberRangeService.NumberRanges/description">
+        <Annotation Term="Common.Label" String="Description"/>
+      </Annotations>
+      <Annotations Target="NumberRangeService.NumberRanges/prefix">
+        <Annotation Term="Common.Label" String="Prefix"/>
+      </Annotations>
+      <Annotations Target="NumberRangeService.NumberRanges/runningNumber">
+        <Annotation Term="Common.Label" String="Running Number"/>
+      </Annotations>
+      <Annotations Target="NumberRangeService.NumberRanges/postfix">
+        <Annotation Term="Common.Label" String="Postfix"/>
+      </Annotations>
+      <Annotations Target="NumberRangeService.NumberRanges/status">
+        <Annotation Term="Common.Label" String="Status"/>
+      </Annotations>
+      <Annotations Target="NumberRangeService.NumberRanges/numberStart">
+        <Annotation Term="Common.Label" String="Starting Number"/>
+        <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+      </Annotations>
+      <Annotations Target="NumberRangeService.NumberRanges/numberEnd">
+        <Annotation Term="Common.Label" String="Ending Number"/>
+        <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+      </Annotations>
+      <Annotations Target="NumberRangeService.NumberRanges/autoRepeat">
+        <Annotation Term="Common.Label" String="Auto Repeat"/>
+      </Annotations>
+      <Annotations Target="NumberRangeService.NumberRanges/concatinatedLastRunningNo">
+        <Annotation Term="Common.Label" String="Last Running Number"/>
+      </Annotations>
+      <Annotations Target="NumberRangeService.NumberRanges/IsActiveEntity">
+        <Annotation Term="UI.Hidden" Bool="true"/>
+      </Annotations>
+      <Annotations Target="NumberRangeService.NumberRanges/HasActiveEntity">
+        <Annotation Term="UI.Hidden" Bool="true"/>
+      </Annotations>
+      <Annotations Target="NumberRangeService.NumberRanges/HasDraftEntity">
+        <Annotation Term="UI.Hidden" Bool="true"/>
+      </Annotations>
+      <Annotations Target="NumberRangeService.NumberRanges/DraftAdministrativeData">
+        <Annotation Term="UI.Hidden" Bool="true"/>
+      </Annotations>
+      <Annotations Target="NumberRangeService.DraftAdministrativeData">
+        <Annotation Term="Common.Label" String="Draft_DraftAdministrativeData"/>
+      </Annotations>
+      <Annotations Target="NumberRangeService.DraftAdministrativeData/DraftUUID">
+        <Annotation Term="UI.Hidden" Bool="true"/>
+        <Annotation Term="Common.Label" String="Draft_DraftUUID"/>
+      </Annotations>
+      <Annotations Target="NumberRangeService.DraftAdministrativeData/CreationDateTime">
+        <Annotation Term="Common.Label" String="Draft_CreationDateTime"/>
+      </Annotations>
+      <Annotations Target="NumberRangeService.DraftAdministrativeData/CreatedByUser">
+        <Annotation Term="Common.Label" String="Draft_CreatedByUser"/>
+      </Annotations>
+      <Annotations Target="NumberRangeService.DraftAdministrativeData/DraftIsCreatedByMe">
+        <Annotation Term="UI.Hidden" Bool="true"/>
+        <Annotation Term="Common.Label" String="Draft_DraftIsCreatedByMe"/>
+      </Annotations>
+      <Annotations Target="NumberRangeService.DraftAdministrativeData/LastChangeDateTime">
+        <Annotation Term="Common.Label" String="Draft_LastChangeDateTime"/>
+      </Annotations>
+      <Annotations Target="NumberRangeService.DraftAdministrativeData/LastChangedByUser">
+        <Annotation Term="Common.Label" String="Draft_LastChangedByUser"/>
+      </Annotations>
+      <Annotations Target="NumberRangeService.DraftAdministrativeData/InProcessByUser">
+        <Annotation Term="Common.Label" String="Draft_InProcessByUser"/>
+      </Annotations>
+      <Annotations Target="NumberRangeService.DraftAdministrativeData/DraftIsProcessedByMe">
+        <Annotation Term="UI.Hidden" Bool="true"/>
+        <Annotation Term="Common.Label" String="Draft_DraftIsProcessedByMe"/>
+      </Annotations>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>
